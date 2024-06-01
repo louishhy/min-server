@@ -165,3 +165,4 @@ drafts/
 
 # Ignore SSL/TLS certificates
 *.pem
+*.cnf

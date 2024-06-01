@@ -1,9 +1,11 @@
+from version import VERSION
+
 class HTTPResponse:
     def __init__(self, status_code=200, reason="OK"):
         self.status_code = status_code
         self.reason = reason
         self.headers = {
-            "Server": "SimpleHTTP/0.1",
+            "Server": f"MinHTTP/{VERSION}",
             "Content-Type": "text/plain",
             "Connection": "close",
         }

@@ -1,4 +1,5 @@
 from typing import Callable
+from request import HTTPRequest
 
 class MiddlewareManager:
     def __init__(self):
@@ -12,3 +13,19 @@ class MiddlewareManager:
     def process_response(self, response):
         for middleware in self.response_middlewares:
             middleware(response)
+
+    def add_request_middleware(self, middleware):
+        self.request_middlewares.append(middleware)
+
+    def add_response_middleware(self, middleware):
+        self.response_middlewares.append(middleware)
+
+
+class CookieParser:
+    def __call__(self, request: HTTPRequest):
+        cookie_header = request.headers.get("Cookie", "")
+        cookies = {}
+        for cookie in cookie_header.split(";"):
+            key, value = cookie.split("=")
+            cookies[key.strip()] = value.strip()
+        request.cookies = cookies

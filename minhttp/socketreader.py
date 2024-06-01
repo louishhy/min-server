@@ -8,7 +8,7 @@ class SocketReader:
         return sock.recv(bufsize)
     
     @staticmethod
-    def read_all_bytes_from_socket(sock: socket.socket, timeout = 1) -> bytes:
+    def read_all_bytes_from_socket(sock: socket.socket, timeout = 0) -> bytes:
         data = b""
         while True:
             ready_to_read, _, _ = select.select([sock], [], [], timeout)
