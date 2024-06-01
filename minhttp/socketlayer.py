@@ -32,7 +32,7 @@ class TCPSocketLayer(SocketLayer):
             self.logger.info(f"Accepted connection from {address}")
             self.executor.submit(self.handle_client, client_socket)
     
-    def handle_client(self, client_socket):
+    def handle_client(self, client_socket: socket.socket):
         bytesinfo = client_socket.recv(1024)
         # Parse into utf-8 string
         info = bytesinfo.decode("utf-8")
