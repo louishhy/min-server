@@ -4,7 +4,7 @@ from middleware import CookieParser
 
 host, port = "localhost", 8080
 
-app = minhttpserver.MinHTTPServer(host, port, ssl_enabled=True)
+app = minhttpserver.MinHTTPServer(host, port, ssl_enabled=False)
 
 app.middleware_manager.add_request_middleware(CookieParser())
 
