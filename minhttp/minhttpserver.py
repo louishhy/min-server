@@ -69,7 +69,7 @@ class MinHTTPServer:
         # Read the raw payload string
         string_payload: str = SocketReader.read_utf8_string_from_socket(connection)
         # Parse the string into an HTTPRequest object
-        request: HTTPRequest = HTTPRequest.parse_http_str(string_payload)
+        request: HTTPRequest = HTTPRequest(string_payload)
         # Run the request through the middleware
         self.middleware_manager.process_request(request)
         # Route the request to a handler
@@ -80,7 +80,7 @@ class MinHTTPServer:
         # Run the response through the middleware
         self.middleware_manager.process_response(response)
         # Turn the response into a string
-        response_str = response.to_string()
+        response_str = str(response)
         # Send the response to the client
         connection.sendall(response_str.encode("utf-8"))
         # Close the connection

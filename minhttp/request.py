@@ -1,44 +1,41 @@
 import urllib
 import urllib.parse
+from dataclasses import dataclass
+from typing import Dict, List
 
+@dataclass # dataclass make your code more clean
 class HTTPRequest:
-    def __init__(self, method: str,
-                 request_uri: str,
-                 version: str,
-                 headers: dict[str, str],
-                 body: str):
-        self.method = method
-        # Parse the request uri
-        self.path, self.query = HTTPRequest._parse_request_uri(request_uri)
-        self.version = version
-        self.headers = headers
-        self.body = body
-        self.params = dict()
-
-    def __str__(self):
-        return f"HTTPRequest({str(self.__dict__)})"
+    method: str
+    path: str
+    query: Dict[str, List[str]]
+    version: str
+    headers: Dict[str, str]
+    body: str
+    params: Dict[str, str] = dict()
+    cookies: Dict[str, str] = dict()
     
-    @staticmethod
-    def parse_http_str(http_str: str):
+    def __init__(self, http_str: str):
         http_str_lines = http_str.split("\r\n")
         request_line = http_str_lines[0]
-        headers: dict[str, str] = dict()
-        body = ""
+        self.headers = dict()
+        self.body = ""
         # Parse request line
-        method, request_uri, version = HTTPRequest._parse_request_line(request_line)
+        self.method, request_uri, self.version = HTTPRequest._parse_request_line(request_line)
         # Parse headers
         parse_cursor = 1
         while http_str_lines[parse_cursor] != "":
             key, value = HTTPRequest._parse_header_line(http_str_lines[parse_cursor])
-            headers[key] = value
+            self.headers[key] = value
             parse_cursor += 1
         # Parse body if present
         parse_cursor = parse_cursor + 1
         if parse_cursor < len(http_str_lines):
-            body = "\r\n".join(http_str_lines[parse_cursor:])
-        # Return object
-        return HTTPRequest(method=method, request_uri=request_uri, version=version, headers=headers, body=body)
+            self.body = "\r\n".join(http_str_lines[parse_cursor:])
+        self.path, self.query = HTTPRequest._parse_request_uri(request_uri)
 
+    def __str__(self) -> str:
+        return f"HTTPRequest({str(self.__dict__)})"
+    
     @staticmethod
     def _parse_request_line(request_line):
         parts = request_line.split()

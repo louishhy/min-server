@@ -1,11 +1,12 @@
-from typing import Callable, Optional
+from typing import Callable, Optional, Dict
+from dataclasses import dataclass
 from request import HTTPRequest
 from response import HTTPResponse, text_response
-import re
 
 class Router:
-    def __init__(self, 
-                 default_handler: Optional[Callable[[HTTPRequest], HTTPResponse]] = None):
+    def __init__(
+        self, 
+        default_handler: Optional[Callable[[HTTPRequest], HTTPResponse]] = None):
         self.routes: list[tuple[str, str, Callable]] = []
         self.default_handler = self._default_handler \
             if default_handler is None else default_handler
@@ -54,8 +55,7 @@ class Router:
             params[pattern_part[1:-1]] = path_part
         return PatternMatchResult(matched = True, params = params)
     
-
+@dataclass
 class PatternMatchResult:
-    def __init__(self, matched: bool, params: dict[str, str]):
-        self.matched = matched
-        self.params = params
+    matched: bool
+    params: Dict[str, str]
