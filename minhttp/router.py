@@ -1,6 +1,6 @@
 from typing import Callable, Optional
 from request import HTTPRequest
-from response import HTTPResponse, text
+from response import HTTPResponse, text_response
 import re
 
 class Router:
@@ -30,7 +30,7 @@ class Router:
             return self._pattern_match_with_params(pattern, path)
     
     def _default_handler(self, request: HTTPRequest) -> HTTPResponse:
-        return text(body = "Not Found", status_code=404, reason="Not Found")
+        return text_response(body = "Not Found", status_code=404, reason="Not Found")
     
     def _pattern_match_with_params(self, pattern: str, path: str) -> 'PatternMatchResult':
         # Split the pattern and path by the forward slash

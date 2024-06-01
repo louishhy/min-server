@@ -1,4 +1,5 @@
 from version import VERSION
+import json
 
 class HTTPResponse:
     def __init__(self, status_code=200, reason="OK"):
@@ -30,8 +31,14 @@ class HTTPResponse:
 
 
 # Helper functions to help you quickly create a response
-def text(body, status_code=200, reason="OK"):
+def text_response(body, status_code=200, reason="OK"):
     response = HTTPResponse(status_code, reason)
     response.set_header("Content-Type", "text/plain")
     response.set_body(body)
+    return response
+
+def json_response(body_dict: dict, status_code=200, reason="OK"):
+    response = HTTPResponse(status_code, reason)
+    response.set_header("Content-Type", "application/json")
+    response.set_body(json.dumps(body_dict))
     return response
