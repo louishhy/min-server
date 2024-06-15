@@ -1,7 +1,7 @@
 # min-server
 
 The `min-server` project aims to provide a series of minimalistic implementations of common server-side applications 
-to help beginners understand the underlying logic of APIs by providing easy-to-understand code and [documentations]().
+to help beginners understand the underlying logic of APIs by providing easy-to-understand code and [documentations](https://louishhy.github.io/min-server-docs/).
 
 ## Subprojects
 ### [MinHTTP](minhttp)
@@ -13,7 +13,7 @@ to help beginners understand the underlying logic of APIs by providing easy-to-u
 ## Why `min-server`?
 Modern server applications and frameworks are extremely sophisticated. Although those careful engineering makes them powerful and production-ready, it can be overwhelming for beginners to understand the underlying logic of server applications from the source code.
 
-That's why we started `min-server`! The aim of `min-server` is to cut away the complexity and focus on the core flow of server applications, such as connection establishments, routing and handling messages. By understanding the basics with the source code and documentation, you can dive into more sophisticated frameworks with ease.
+The aim of `min-server` is to cut away the complexity and focus on the core flow of server applications, such as connection establishments, routing and handling messages. By understanding the basics with the source code and documentation, you can dive into more sophisticated frameworks with ease.
 
 > [!IMPORTANT]
 >
