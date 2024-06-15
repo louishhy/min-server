@@ -166,3 +166,6 @@ drafts/
 # Ignore SSL/TLS certificates
 *.pem
 *.cnf
+
+# Ignore vscode settings
+.vscode/
