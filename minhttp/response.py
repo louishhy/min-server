@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict
 
 from version import VERSION
@@ -8,11 +8,11 @@ import json
 class HTTPResponse:
     status_code: int = 200
     reason: str = "OK"
-    headers: Dict[str, str] = {
+    headers: Dict[str, str] = field(default_factory=lambda: {
             "Server": f"MinHTTP/{VERSION}",
             "Content-Type": "text/plain",
             "Connection": "close",
-        }
+        })
     body: str = ""
 
     def set_header(self, key: str, value: str):
