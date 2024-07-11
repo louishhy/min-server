@@ -1,0 +1,6 @@
+services:
+  flask:
+    build: ./flaskapi
+    ports: 
+      - 8001:8000
+    restart: always
