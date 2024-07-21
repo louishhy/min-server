@@ -1,11 +1,13 @@
 # min-server
 
-The `min-server` project aims to provide a series of minimalistic implementations of common server-side applications 
-to help beginners understand the underlying logic of APIs by providing easy-to-understand code and [documentations](https://louishhy.github.io/min-server-docs/).
+The `min-server` project aims to provide a series of minimalistic implementations optimized for learning
+for common server-side applications 
+to help beginners understand the underlying logic of APIs from the ground up
+by providing easy-to-understand code and [documentations](https://louishhy.github.io/min-server-docs/).
 
 ## Subprojects
 ### [MinHTTP](minhttp)
-[Flask](https://flask.palletsprojects.com/en/3.0.x/)-like, minimalistic implementation of HTTP server from the `socket` level using only native Python libraries.
+[Flask](https://flask.palletsprojects.com/en/3.0.x/)-like, minimalistic implementation of HTTP server from the `socket` level using only default Python libraries.
 
 ### MinWebSocket
 🥳 To be implemented, stay tuned!

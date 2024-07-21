@@ -1,7 +1,10 @@
 # MinHTTP
-A minimalistic HTTP server written in Python.
+A minimalistic HTTP server written in Python from the `socket` level, 
+using only default Python libraries and functionalities.
 
 ## Enabling SSL/TLS
+The `MinHTTPServer` class supports SSL/TLS. To enable SSL/TLS, follow the steps below:
+
 1. Install OpenSSL
 2. Change your working directory to the project root.
 ```bash
