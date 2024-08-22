@@ -3,7 +3,7 @@
 The `min-server` project aims to provide a series of minimalistic implementations optimized for learning
 for common server-side applications 
 to help beginners understand the underlying logic of APIs from the ground up
-by providing easy-to-understand code and [documentations](https://louishhy.github.io/min-server-docs/).
+by providing easy-to-understand code and [documentations](https://minserver.louishhy.com/).
 
 ## Subprojects
 ### [MinHTTP](minhttp)
