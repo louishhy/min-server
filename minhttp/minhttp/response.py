@@ -1,6 +1,5 @@
 import json
 from dataclasses import dataclass, field
-from typing import Dict
 
 from version import VERSION
 
@@ -9,7 +8,7 @@ from version import VERSION
 class HTTPResponse:
     status_code: int = 200
     reason: str = "OK"
-    headers: Dict[str, str] = field(
+    headers: dict[str, str] = field(
         default_factory=lambda: {
             "Server": f"MinHTTP/{VERSION}",
             "Content-Type": "text/plain",

@@ -1,19 +1,18 @@
 import urllib
 import urllib.parse
 from dataclasses import dataclass, field
-from typing import Dict, List
 
 
 @dataclass  # dataclass make your code more clean
 class HTTPRequest:
     method: str
     path: str
-    query: Dict[str, List[str]]
+    query: dict[str, list[str]]
     version: str
-    headers: Dict[str, str]
+    headers: dict[str, str]
     body: str
-    params: Dict[str, str] = field(default_factory=dict)
-    cookies: Dict[str, str] = field(default_factory=dict)
+    params: dict[str, str] = field(default_factory=dict)
+    cookies: dict[str, str] = field(default_factory=dict)
 
     def __init__(self, http_str: str):
         http_str_lines = http_str.split("\r\n")
