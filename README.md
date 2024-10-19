@@ -1,9 +1,20 @@
 # min-server
 
-The `min-server` project aims to provide a series of minimalistic implementations optimized for learning
+**_Minimalistic implementations for common server-side applications, optimized for learning purpose._**
+
+## "Minimalistic"?
+The `min-server` project aims to provide a series of **minimalistic** implementations optimized for learning
 for common server-side applications 
 to help beginners understand the underlying logic of APIs from the ground up
 by providing easy-to-understand code and [documentations](https://minserver.louishhy.com/).
+
+By minimalistic we mean:
+1. **Less dependencies**: Use as few libraries as possible (since APIs can easily abstract away the underlying logic).
+2. **Easy to interpret**: Write code that is easy to understand and follow.
+    - Hence, notwithstanding (1), 
+    do use libraries that abstract away the details that is not in the focus of the project
+    since it helps readability. :)
+3. **Focus on core**: Focus on the core idea of the application to reveal the main logic flow.
 
 ## Subprojects
 ### [MinHTTP](minhttp)
