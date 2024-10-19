@@ -3,7 +3,8 @@ import urllib.parse
 from dataclasses import dataclass, field
 from typing import Dict, List
 
-@dataclass # dataclass make your code more clean
+
+@dataclass  # dataclass make your code more clean
 class HTTPRequest:
     method: str
     path: str
@@ -13,14 +14,16 @@ class HTTPRequest:
     body: str
     params: Dict[str, str] = field(default_factory=dict)
     cookies: Dict[str, str] = field(default_factory=dict)
-    
+
     def __init__(self, http_str: str):
         http_str_lines = http_str.split("\r\n")
         request_line = http_str_lines[0]
         self.headers = dict()
         self.body = ""
         # Parse request line
-        self.method, request_uri, self.version = HTTPRequest._parse_request_line(request_line)
+        self.method, request_uri, self.version = HTTPRequest._parse_request_line(
+            request_line
+        )
         # Parse headers
         parse_cursor = 1
         while http_str_lines[parse_cursor] != "":
@@ -35,7 +38,7 @@ class HTTPRequest:
 
     def __str__(self) -> str:
         return f"HTTPRequest({str(self.__dict__)})"
-    
+
     @staticmethod
     def _parse_request_line(request_line):
         parts = request_line.split()
@@ -49,7 +52,7 @@ class HTTPRequest:
         if len(parts) != 2:
             raise ValueError(f"Invalid HTTP header line: {header_line}")
         return parts[0].strip(), parts[1].strip()
-    
+
     @staticmethod
     def _parse_request_uri(request_uri: str):
         parsed = urllib.parse.urlparse(request_uri)

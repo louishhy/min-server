@@ -1,6 +1,7 @@
-from typing import Callable, Dict
+from typing import Callable
+
 from request import HTTPRequest
-from response import HTTPResponse
+
 
 class MiddlewareManager:
     def __init__(self):
@@ -25,7 +26,7 @@ class MiddlewareManager:
 class CookieParser:
     def __call__(self, request: HTTPRequest):
         cookie_header = request.headers.get("Cookie", "")
-        cookies: Dict[str, str] = {}
+        cookies: dict[str, str] = {}
         for cookie in cookie_header.split(";"):
             key, value = cookie.split("=")
             cookies[key.strip()] = value.strip()

@@ -1,33 +1,34 @@
 import logging
+import os
+import signal
 import socket
-from concurrent.futures import ThreadPoolExecutor
 import ssl
-from socketreader import SocketReader
+import threading
+from concurrent.futures import ThreadPoolExecutor
+
+import utils
+from middleware import MiddlewareManager
 from request import HTTPRequest
 from response import HTTPResponse
 from router import Router
-from middleware import MiddlewareManager
-import os
-import utils
-import signal
-import threading
-
+from socketreader import SocketReader
 
 logging.basicConfig(level=logging.INFO)
 DEFAULT_CERT_PATH = os.path.join(os.path.dirname(__file__), "cert.pem")
 DEFAULT_KEY_PATH = os.path.join(os.path.dirname(__file__), "key.pem")
 
+
 class MinHTTPServer:
-    def __init__(self, host: str, 
-                 port: int,
-                 ssl_enabled: bool = False):
+    def __init__(self, host: str, port: int, ssl_enabled: bool = False):
         self.host = host
         self.port = port
         # SSL Related settings
         self.ssl_enabled = ssl_enabled
         if self.ssl_enabled:
             self.ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-            self.ssl_context.load_cert_chain(certfile=DEFAULT_CERT_PATH, keyfile=DEFAULT_KEY_PATH)
+            self.ssl_context.load_cert_chain(
+                certfile=DEFAULT_CERT_PATH, keyfile=DEFAULT_KEY_PATH
+            )
         self.logger = logging.Logger(self.__class__.__name__)
         self.listening_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.listening_socket.bind((self.host, self.port))
@@ -39,9 +40,7 @@ class MinHTTPServer:
         signal.signal(signal.SIGINT, self._signal_handler)
 
     def run(self):
-        logging.info(
-            f"Starting server on {self.host}:{self.port}..."
-        )
+        logging.info(f"Starting server on {self.host}:{self.port}...")
         while not self._is_shutting_down.is_set():
             self._main_loop()
 
@@ -58,7 +57,9 @@ class MinHTTPServer:
                     logging.exception(f"SSL Error: {e}")
                     connection.close()
                     return
-            self.thread_executor.submit(self._handle_connection, connection, client_address)
+            self.thread_executor.submit(
+                self._handle_connection, connection, client_address
+            )
         except socket.timeout:
             pass
 
@@ -93,33 +94,32 @@ class MinHTTPServer:
     def request_middleware(self, func):
         self.middleware_manager.add_request_middleware(func)
         return func
-    
+
     def response_middleware(self, func):
         self.middleware_manager.add_response_middleware(func)
         return func
-    
+
     def get(self, path: str):
         def decorator(func):
             self.router.add_route("GET", path, func)
             return func
+
         return decorator
-    
+
     def post(self, path: str):
         def decorator(func):
             self.router.add_route("POST", path, func)
             return func
+
         return decorator
-    
+
     def shutdown(self):
         self._is_shutting_down.set()
         self.listening_socket.close()
         self.thread_executor.shutdown(cancel_futures=True)
         logging.info("Server shut down.")
-    
+
     # Signal handler for SIGINT
     def _signal_handler(self, signum, frame):
         logging.info("Shutting down server...")
         self.shutdown()
-        
-    
-

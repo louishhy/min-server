@@ -169,3 +169,6 @@ drafts/
 
 # Ignore vscode settings
 .vscode/
+
+# Ignore ruff settings
+.ruff.toml
