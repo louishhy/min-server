@@ -10,11 +10,15 @@ class MiddlewareManager:
 
     def process_request(self, request):
         for middleware in self.request_middlewares:
-            middleware(request)
+            middleware_resp = middleware(request)
+            if middleware_resp:
+                return middleware_resp
 
     def process_response(self, response):
         for middleware in self.response_middlewares:
-            middleware(response)
+            middleware_resp = middleware(response)
+            if middleware_resp:
+                return middleware_resp
 
     def add_request_middleware(self, middleware):
         self.request_middlewares.append(middleware)
