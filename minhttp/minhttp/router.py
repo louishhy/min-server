@@ -1,8 +1,15 @@
-from dataclasses import dataclass
-from typing import Callable, Dict, Optional
+from dataclasses import dataclass, field
+from typing import Callable, Optional
 
 from request import HTTPRequest
-from response import HTTPResponse, text_response
+from response import HTTPResponse
+from utils import text_response
+
+
+@dataclass
+class PatternMatchResult:
+    matched: bool
+    params: dict[str, str] = field(default_factory=dict)
 
 
 class Router:
@@ -26,7 +33,7 @@ class Router:
     def add_route(self, method: str, path: str, handler: Callable):
         self.routes.append((method, path, handler))
 
-    def pattern_match(self, pattern: str, path: str) -> "PatternMatchResult":
+    def pattern_match(self, pattern: str, path: str) -> PatternMatchResult:
         # Check if there are any angle brackets in the pattern
         if "<" not in pattern:
             return PatternMatchResult(matched=(pattern == path), params={})
@@ -36,9 +43,7 @@ class Router:
     def _default_handler(self, request: HTTPRequest) -> HTTPResponse:
         return text_response(body="Not Found", status_code=404, reason="Not Found")
 
-    def _pattern_match_with_params(
-        self, pattern: str, path: str
-    ) -> "PatternMatchResult":
+    def _pattern_match_with_params(self, pattern: str, path: str) -> PatternMatchResult:
         # Split the pattern and path by the forward slash
         pattern_parts = pattern.split("/")
         path_parts = path.split("/")
@@ -59,9 +64,3 @@ class Router:
                 raise ValueError(f"Invalid angle bracket pattern: {pattern}")
             params[pattern_part[1:-1]] = path_part
         return PatternMatchResult(matched=True, params=params)
-
-
-@dataclass
-class PatternMatchResult:
-    matched: bool
-    params: Dict[str, str]

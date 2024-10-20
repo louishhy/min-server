@@ -33,24 +33,3 @@ class HTTPResponse:
     def to_bytes(self):
         return self.__str__().encode("utf-8")
 
-
-# Helper functions to help you quickly create a response
-def text_response(body, status_code=200, reason="OK") -> HTTPResponse:
-    response = HTTPResponse(status_code, reason)
-    response.set_header("Content-Type", "text/plain")
-    response.set_body(body)
-    return response
-
-
-def json_response(body_dict: dict, status_code=200, reason="OK") -> HTTPResponse:
-    response = HTTPResponse(status_code, reason)
-    response.set_header("Content-Type", "application/json")
-    response.set_body(json.dumps(body_dict))
-    return response
-
-
-def html_response(body, status_code=200, reason="OK") -> HTTPResponse:
-    response = HTTPResponse(status_code, reason)
-    response.set_header("Content-Type", "text/html")
-    response.set_body(body)
-    return response
