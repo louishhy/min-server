@@ -1,6 +1,6 @@
 from typing import Callable
 
-from request import HTTPRequest
+from minhttp.request import HTTPRequest
 
 
 class MiddlewareManager:

@@ -37,15 +37,16 @@ def file_response(file_path: str, status_code=200, reason="OK") -> HTTPResponse:
     if content_type is None:
         content_type = "application/octet-stream"  # Default to binary if type is unknown
 
-    # Read the file contents
-    try:
-        with open(file_path, "rb") as file:
-            file_content = file.read()
-    except IOError:
-        return text_response("Unable to read file", status_code=500, reason="Internal Server Error")
+    # Read the file contents, raises OSError for reading
+    with open(file_path, "rb") as file:
+        file_content = file.read()
 
     # Create an HTTP response with the file content
     response = HTTPResponse(status_code, reason)
     response.set_header("Content-Type", content_type)
     response.set_body(file_content.decode("utf-8") if "text" in content_type else file_content)
     return response
+
+
+def internal_error_response(msg: str = "Internal Server Error") -> HTTPResponse:
+    return text_response(msg, status_code=500, reason="Internal Server Error")

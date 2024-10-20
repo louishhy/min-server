@@ -1,1 +1,1 @@
-from minhttpserver import MinHTTPServer
+from .minhttpserver import MinHTTPServer

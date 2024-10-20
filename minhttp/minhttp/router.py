@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 
-from request import HTTPRequest
-from response import HTTPResponse
-from utils import text_response
+from minhttp.request import HTTPRequest
+from minhttp.response import HTTPResponse
+from minhttp.utils import text_response
 
 
 @dataclass

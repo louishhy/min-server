@@ -1,11 +1,12 @@
 import logging
 import socket
 
-from middleware import MiddlewareManager
-from request import HTTPRequest
-from response import HTTPResponse
-from router import Router
-from socketreader import SocketReader
+from minhttp.middleware import MiddlewareManager
+from minhttp.request import HTTPRequest
+from minhttp.response import HTTPResponse
+from minhttp.router import Router
+from minhttp.socketreader import SocketReader
+from minhttp.utils import internal_error_response
 
 logging.basicConfig(level=logging.INFO)
 
@@ -33,7 +34,11 @@ class MinHTTPServer:
             logging.info(f"Accepted connection from {client_address}")
             self._handle_connection(connection, client_address)
         except KeyboardInterrupt:
-            self.shutdown()
+            self._shutdown()
+        except Exception:
+            self._internal_error_handler(connection)
+            raise
+            
 
     def _handle_connection(self, connection: socket.socket, client_address: tuple):
         logging.info(f"Handling connection from {client_address}")
@@ -90,6 +95,10 @@ class MinHTTPServer:
 
         return decorator
 
-    def shutdown(self):
+    def _shutdown(self):
         self.listening_socket.close()
         logging.info("Server shut down.")
+
+    def _internal_error_handler(self, connection: socket.socket):
+        connection.sendall(str(internal_error_response()).encode("utf-8"))
+        connection.close()

@@ -1,7 +1,7 @@
 import json
 from dataclasses import dataclass, field
 
-from version import VERSION
+from minhttp.version import VERSION
 
 
 @dataclass
